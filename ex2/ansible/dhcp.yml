@@ -1,0 +1,26 @@
+- hosts: dhcp
+  become: true
+  tasks:
+    - name: Install DHCP server
+      apt:
+        name: isc-dhcp-server
+        state: present
+        update_cache: yes
+
+    - name: Configure DHCP
+      copy:
+        dest: /etc/dhcp/dhcpd.conf
+        content: |
+          default-lease-time 600;
+          max-lease-time 7200;
+          subnet 10.0.1.0 netmask 255.255.255.0 {
+            range 10.0.1.50 10.0.1.100;
+            option routers 10.0.1.1;
+            option domain-name-servers 8.8.8.8;
+          }
+
+    - name: Enable DHCP service
+      service:
+        name: isc-dhcp-server
+        state: started
+        enabled: true

@@ -1,0 +1,13 @@
+# Terraform state files
+*.tfstate
+*.tfstate.backup
+.terraform/
+
+# Ansible sensitive files
+*.pem
+id_rsa
+id_rsa.pub
+
+# Outros arquivos temporários
+*.log
+*.swp
